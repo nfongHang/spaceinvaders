@@ -136,6 +136,10 @@ enemy_shoot_cd=500
 
 lives=3
 
+# SOUNDS
+sounds={"shoot" : pygame.mixer.Sound("shoot.wav"),
+        "invader_death" : pygame.mixer.Sound("invaderkilled.wav"),
+        "invader_move" : pygame.mixer.Sound("fastinvader1.wav")}
 #main loop, running state
 while running: 
     for event in pygame.event.get():
