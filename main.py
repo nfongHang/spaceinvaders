@@ -162,7 +162,7 @@ while running:
         #1-2 enemies shoot
         for x in range(0,random.randint(0,1)):
             #create bullet obj using shoot method
-            enemyObjs[random.randint(0,len(enemyObjs)-1)].shoot()
+            enemyObjs[random.randint(0,len(enemyObjs)-1)]
         #randomizes shoot cooldown
         enemy_shoot_cd=random.randint(0,1250)
     
