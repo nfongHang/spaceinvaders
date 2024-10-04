@@ -145,6 +145,8 @@ sounds={"shoot" : pygame.mixer.Sound("shoot.wav"),
         "invader_move" : pygame.mixer.Sound("fastinvader1.wav"),
         "player_death" : pygame.mixer.Sound("explosion.wav")}
 #main loop, running state
+pygame.mixer.music.load('spaceinvaders1.mpeg')
+pygame.mixer.music.play(-1)
 while running: 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
