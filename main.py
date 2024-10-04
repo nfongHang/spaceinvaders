@@ -49,7 +49,7 @@ class Entity(Construct):
 class Enemy(Entity):
     def __init__(self, size, x=0, y=0):
         super().__init__(size, x, y) # init attributes from parent class construct 
-        self.image = pygame.image.load("sources\sprites\enemy.png")
+        self.image = pygame.image.load(r"sources\sprites\enemy.png")
     def shoot(self):
         """
         Appends a new object of class Bullet into attribute bullets.
@@ -60,7 +60,7 @@ class Enemy(Entity):
 #player class
 class Player(Entity):
     def __init__(self, size, x, y):
-        self.image = pygame.image.load("sources\sprites\player.png")
+        self.image = pygame.image.load(r"sources\sprites\player.png")
         super().__init__(size, x, y)
     
     def shoot(self):
@@ -77,7 +77,7 @@ class Player(Entity):
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
-        self.image = pygame.image.load("sources\sprites\shot.png")
+        self.image = pygame.image.load(r"sources\sprites\shot.png")
         super().__init__([3,7],x-1.5,y)
         self.downwards=downwards
 
