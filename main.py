@@ -9,6 +9,7 @@ class Construct:
         self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
     
 #test
+#test 2.1
 class Entity(Construct):
     def __init__(self, size, x, y):
         super().__init__(size,x,y)
