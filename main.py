@@ -11,6 +11,7 @@ class Construct:
 #test
 #test 2.1
 #test 2.2
+# test 2.3
 class Entity(Construct):
     def __init__(self, size, x, y):
         super().__init__(size,x,y)
