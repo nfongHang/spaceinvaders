@@ -14,8 +14,9 @@ class Entity(Construct):
         super().__init__(size,x,y) # init attributes from parent class construct
         self.bullets=[] 
 
-    def render(self):
-        pygame.draw.rect(screen, (255,255,255), self.rect) # render method
+    def render(self,screen):
+        # pygame.draw.rect(screen, (255,255,255), self.rect) # old render method
+        screen.blit(self.image,self.rect)
 
     def move(self, vel_x, vel_y,vel_inverse): # movement method
         self.x += vel_x*vel_inverse # vel_inverse changes the direction
@@ -59,9 +60,8 @@ class Shield(Construct):
         self.__damageBlocks.append(Damage(x,y))
     
     #render method for shield 
-    def render(self):
-#       pygame.draw.rect(screen, (255,255,255), self.rect)    # old rectangle draw 
-        surface.blit(self.image,self.rect)
+    def render(self,screen):
+        pygame.draw.rect(screen, (255,255,255), self.rect)    # old rectangle draw 
         #renders the black damage rects over the shield
         for damage in self.__damageBlocks:
             pygame.draw.rect(screen, (0,0,0), damage.rect)
@@ -163,12 +163,12 @@ while running:
     for bullet in player.bullets:
         bullet.move(0,5,bullet.downwards)
         
-        bullet.render()
+        bullet.render(screen)
     
     for mob in enemyObjs:
         for bullet in mob.bullets:
             bullet.move(0,5,bullet.downwards)
-            bullet.render()
+            bullet.render(screen)
 
 
     if time_elapsed<enemy_shoot_cd+25 and time_elapsed>enemy_shoot_cd-25:
@@ -223,12 +223,12 @@ while running:
             if pygame.Rect.colliderect(bullet.rect,player.rect):
                 lives-=1
                 mob.bullets.pop(mob.bullets.index(bullet))
-        mob.render()
+        mob.render(screen)
     
     #render shields and it's damage
     for shield in shields:
-        shield.render()
-    player.render()
+        shield.render(screen)
+    player.render(screen)
     pygame.display.flip()
     clock.tick(60)
     if lives<=0:
