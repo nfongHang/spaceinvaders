@@ -72,6 +72,7 @@ class Player(Entity):
     def die(self):
         self.x=20
         self.y=200
+        self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
         pygame.mixer.Sound.play(sounds["player_death"])
 
 class Bullet(Entity):
@@ -149,6 +150,8 @@ for x in range(0,3):
 prev_time=time.time()
 dt=0
 
+player=Player( [20,7.5] , 20, 200)
+
 #initialise event for moving Enemy
 movement_clock=pygame.NUMEVENTS-1
 
@@ -164,8 +167,6 @@ count=0
 # -1 = going lef t  1 = going right
 vel_inverse=1
 
-player=Player( [20,7.5] , 20, 200)
-
 enemy_shoot_cd=500
 
 lives=3
@@ -180,9 +181,13 @@ sounds={"shoot" : pygame.mixer.Sound("sources\sounds\shoot.wav"),
         "invader_death" : pygame.mixer.Sound("sources\sounds\invaderkilled.wav"),
         "invader_move" : pygame.mixer.Sound("sources\sounds\invader1.wav"),
         "player_death" : pygame.mixer.Sound("sources\sounds\explosion.wav")}
-#main loop, running state
-#test
 
+#FONT/TEXT
+pygame.font.init()
+font=pygame.font.SysFont('arial',  30)
+
+
+#main loop, running state
 while running: 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -291,6 +296,23 @@ while running:
 
 #end state
 endScreen=True
+
+def message(text):
+    return font.render(text, False, (255,255,255)) 
+
 while endScreen:
-    print()
+    screen.fill(0)
+    text = message('Your Score: '+str(score))
+    screen.blit(text,(0,0))
+    text = message('Press Esc to leave the game')
+    screen.blit(text,(0,100))
+    
+
+    keys=pygame.key.get_pressed()
+    if keys[pygame.K_ESCAPE]:
+        endScreen=False
+        pygame.quit()
+    pygame.display.flip()
+    clock.tick(60)
+    
 pygame.quit()
