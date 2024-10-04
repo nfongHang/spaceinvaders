@@ -86,7 +86,7 @@ class Shield(Construct):
 
 class Damage(Construct):
     def __init__(self,x,y):
-        super().__init__([4,random.randint(6,8)], x, y)
+        super().__init__([5,random.randint(7,9)], x, y)
         #creates attributes that shows what the top hitbox is for the rect (I couldnt figure out how to get it to test the top of the rect)
         self.top_hitbox=pygame.Rect(self.x,self.y,self.size[0],1)
 
