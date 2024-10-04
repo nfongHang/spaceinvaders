@@ -33,7 +33,7 @@ class Entity(Construct):
 class Enemy(Entity):
     def __init__(self, size, x=0, y=0):
         super().__init__(size, x, y) # init attributes from parent class construct 
-        self.image = pygame.image.load("yellow.png")
+        self.image = pygame.image.load("enemy.png")
     def shoot(self):
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y,1))
     
