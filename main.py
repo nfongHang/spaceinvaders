@@ -85,7 +85,9 @@ class Damage(Construct):
 
 pygame.init()
 
-screen = pygame.display.set_mode([224,256],pygame.RESIZABLE)
+screen = pygame.display.set_mode([224,256])
+window = pygame.display.set_mode([1120,1280])
+window.blit(pygame.transform.scale(screen,window),(0,0))
 clock = pygame.time.Clock()
 running = True
 
