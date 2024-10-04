@@ -130,13 +130,16 @@ count=0
 # -1 = going left  1 = going right
 vel_inverse=1
 
-player=Player( [30,10] , 20, 200)
+player=Player( [20,7.5] , 20, 200)
 
 enemy_shoot_cd=500
 
 lives=3
 
 # SOUNDS
+
+pygame.mixer.init()
+
 sounds={"shoot" : pygame.mixer.Sound("shoot.wav"),
         "invader_death" : pygame.mixer.Sound("invaderkilled.wav"),
         "invader_move" : pygame.mixer.Sound("fastinvader1.wav")}
@@ -165,6 +168,7 @@ while running:
         if now-shoot_cooldown>0.4:
             shoot_cooldown=now
             player.shoot()
+            pygame.mixer.Sound.play(sounds["shoot"])
 
     #move bullets
     for bullet in player.bullets:
