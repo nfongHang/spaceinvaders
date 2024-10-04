@@ -49,7 +49,7 @@ class Player(Entity):
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
-
+        self.image = pygame.image.load("bullet.png")
         super().__init__([3,7],x-1.5,y)
         self.downwards=downwards
 
