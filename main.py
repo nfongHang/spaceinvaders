@@ -38,6 +38,7 @@ class Enemy(Entity):
 #player class
 class Player(Entity):
     def __init__(self, size, x, y):
+        self.image = pygame.image.load("player.png")
         super().__init__(size, x, y)
     
     def shoot(self):
@@ -59,7 +60,8 @@ class Shield(Construct):
     
     #render method for shield 
     def render(self):
-        pygame.draw.rect(screen, (255,255,255), self.rect)
+#       pygame.draw.rect(screen, (255,255,255), self.rect)    # old rectangle draw 
+        surface.blit(self.image,self.rect)
         #renders the black damage rects over the shield
         for damage in self.__damageBlocks:
             pygame.draw.rect(screen, (0,0,0), damage.rect)
@@ -82,6 +84,7 @@ class Shield(Construct):
 class Damage(Construct):
     def __init__(self,x,y):
         super().__init__([random.randint(5,7),random.randint(6,8)], x, y)
+        #creates attributes that shows what the top hitbox is for the rect (I couldnt figure out how to get it to test the top of the rect)
         self.top_hitbox=pygame.Rect(self.x,self.y,self.size[0],1)
 
     
