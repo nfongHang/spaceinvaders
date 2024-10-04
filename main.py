@@ -12,6 +12,7 @@ class Construct:
 class Entity(Construct):
     def __init__(self, size, x, y):
         super().__init__(size,x,y) # init attributes from parent class construct
+        self.bullets=[] 
 
     def render(self):
         pygame.draw.rect(screen, (255,255,255), self.rect) # render method
@@ -19,17 +20,16 @@ class Entity(Construct):
     def move(self, vel_x, vel_y,vel_inverse): # movement method
         self.x += vel_x*vel_inverse # vel_inverse changes the direction
         self.y += vel_y*vel_inverse # 
-        self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
+        self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1]) #update rect attribute with new one when moved
 
     def getxy(self):
-        return(self.x,self.y)
+        return(self.x,self.y) #returns position as a tuple
     
 
 #enemy class
 class Enemy(Entity):
     def __init__(self, size, x=0, y=0):
-        super().__init__(size, x,y)
-        self.bullets=[]
+        super().__init__(size, x, y) # init attributes from parent class construct 
 
     def shoot(self):
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y,1))
@@ -39,7 +39,6 @@ class Enemy(Entity):
 class Player(Entity):
     def __init__(self, size, x, y):
         super().__init__(size, x, y)
-        self.bullets=[]
     
     def shoot(self):
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y, -1))
@@ -67,7 +66,7 @@ class Shield(Construct):
     
     def testBulletCollision(self,bullet):
         damaged_area=False
-        for damage in self.__damageBlocks():
+        for damage in self.__damageBlocks:
             #checks for if the bullet is in any of the damaged areas in the shield
             if pygame.Rect.colliderect(damage.top_hitbox,bullet.rect):
                 damaged_area=True
