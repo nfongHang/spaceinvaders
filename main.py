@@ -1,6 +1,13 @@
 import pygame, time, random
 
 # Define classes / functions
+class SpriteSheet:
+    def __init__(self, path, spacing):
+        self.path=pygame.image.load(path).convert_alpha()
+        self.spacing=spacing
+
+
+
 class Construct:
     def __init__(self,size,x=0,y=0):
         self.x = x
