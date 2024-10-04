@@ -81,17 +81,24 @@ class Shield(Construct):
         super().__init__([35,15],x,y)
         self.__damageBlocks=[]
 
-    def damage(self,x,y):
+    def __damage(self,x,y):
+        """
+        private method that appends Damage object to private attribute damageBlocks
+        """
         self.__damageBlocks.append(Damage(x,y))
     
     #render method for shield 
     def render(self,screen):
-        pygame.draw.rect(screen, (255,255,255), self.rect)    # old rectangle draw 
+        pygame.draw.rect(screen, (255,255,255), self.rect) 
         #renders the black damage rects over the shield
         for damage in self.__damageBlocks:
             pygame.draw.rect(screen, (0,0,0), damage.rect)
     
     def testBulletCollision(self, bullet, destructive):
+        """
+        Method that will return True if there is a bullet that collides with the shield.
+        When it collides, it will create a Damage object at the place where the bullet hit.
+        """
         damaged_area=False
         for damage in self.__damageBlocks:
             #checks for if the bullet is in any of the damaged areas in the shield
@@ -102,7 +109,7 @@ class Shield(Construct):
             #find the xy of the bullet
             xy=bullet.getxy()    # returns tuple
             if destructive:
-                self.damage(xy[0],xy[1]) # create damage at the x and y of the bullet
+                self.__damage(xy[0],xy[1]) # create damage at the x and y of the bullet
             return True # returns that it did collide
         
 
