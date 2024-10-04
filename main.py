@@ -164,8 +164,8 @@ while running:
     elif keys[pygame.K_RIGHT] and player.getxy()[0]<screen.get_width()-25:
         player.move(2 ,0, 1)
     if keys[pygame.K_SPACE]:
-
-        if now-shoot_cooldown>0.4:
+        #if user wants to shoot, check if cooldwon is over
+        if now-shoot_cooldown>0.4: #figures out when the last bullet was shot versus the time now
             shoot_cooldown=now
             player.shoot()
             pygame.mixer.Sound.play(sounds["shoot"])
