@@ -17,12 +17,8 @@ class Entity(Construct):
         pygame.draw.rect(screen, (255,255,255), self.rect)
 
     def move(self, vel_x, vel_y,vel_inverse):
-        if vel_inverse==True:
-            self.x += vel_x
-            self.y += vel_y
-        else:
-            self.x -= vel_x
-            self.y -= vel_y
+        self.x += vel_x*vel_inverse
+        self.y += vel_y*vel_inverse
         self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
 
     def getxy(self):
@@ -36,7 +32,7 @@ class Enemy(Entity):
         self.bullets=[]
 
     def shoot(self):
-        self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y,True))
+        self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y,1))
     
 
 #player class
@@ -46,7 +42,7 @@ class Player(Entity):
         self.bullets=[]
     
     def shoot(self):
-        self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y, False))
+        self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y, -1))
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
@@ -141,9 +137,9 @@ while running:
     #player input
     keys=pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player.getxy()[0]>20:
-        player.move(2, 0,False)
+        player.move(2, 0, -1)
     elif keys[pygame.K_RIGHT] and player.getxy()[0]<screen.get_width()-50:
-        player.move(2 ,0, True)
+        player.move(2 ,0, 1)
     if keys[pygame.K_SPACE]:
 
         if now-shoot_cooldown>0.4:
@@ -174,16 +170,16 @@ while running:
         #in ms
         #checks to move down    
         if enemyObjs[-1].getxy()[0]>screen.get_width()-30:
-            vel_inverse=False
+            vel_inverse=-1
             count+=1
         
         elif enemyObjs[0].getxy()[0]<30:
-            vel_inverse=True
+            vel_inverse=1
             count+=1
         
         if count==4:
             for mob in enemyObjs:
-                mob.move(0,15,True)
+                mob.move(0,15,1)
             count=0
         else:
             for mob in enemyObjs:
