@@ -177,10 +177,10 @@ score=0
 
 pygame.mixer.init()
 
-sounds={"shoot" : pygame.mixer.Sound("sources\sounds\shoot.wav"),
-        "invader_death" : pygame.mixer.Sound("sources\sounds\invaderkilled.wav"),
-        "invader_move" : pygame.mixer.Sound("sources\sounds\invader1.wav"),
-        "player_death" : pygame.mixer.Sound("sources\sounds\explosion.wav")}
+sounds={"shoot" : pygame.mixer.Sound(r"sources\sounds\shoot.wav"),
+        "invader_death" : pygame.mixer.Sound(r"sources\sounds\invaderkilled.wav"),
+        "invader_move" : pygame.mixer.Sound(r"sources\sounds\invader1.wav"),
+        "player_death" : pygame.mixer.Sound(r"sources\sounds\explosion.wav")}
 
 #FONT/TEXT
 pygame.font.init()
@@ -272,7 +272,6 @@ while running:
                 player.render(screen)
                 mob.bullets.pop(mob.bullets.index(bullet))
         
-    #test 1
     #render shields and it's damage
     for shield in shields:
         shield.render(screen)
