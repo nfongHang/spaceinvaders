@@ -7,6 +7,7 @@ class Construct:
         self.y = y
         self.size=size
         self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
+        self.size = self.image.get_size()
     
 
 class Entity(Construct):
@@ -16,7 +17,7 @@ class Entity(Construct):
 
     def render(self,screen):
         # pygame.draw.rect(screen, (255,255,255), self.rect) # old render method
-        screen.blit(self.image,self.rect)
+        screen.blit(pygame.transform.scale(self.image,(int(self.size[0]/2), int(self.size[1]/2))),self.rect)
 
     def move(self, vel_x, vel_y,vel_inverse): # movement method
         self.x += vel_x*vel_inverse # vel_inverse changes the direction
@@ -47,6 +48,7 @@ class Player(Entity):
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
+
         super().__init__([3,7],x-1.5,y)
         self.downwards=downwards
 
