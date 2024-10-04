@@ -11,18 +11,18 @@ class Construct:
 
 class Entity(Construct):
     def __init__(self, size, x, y):
-        super().__init__(size,x,y)
+        super().__init__(size,x,y) # init attributes from parent class construct
 
     def render(self):
-        pygame.draw.rect(screen, (255,255,255), self.rect)
+        pygame.draw.rect(screen, (255,255,255), self.rect) # render method
 
-    def move(self, vel_x, vel_y,vel_inverse):
-        self.x += vel_x*vel_inverse
-        self.y += vel_y*vel_inverse
+    def move(self, vel_x, vel_y,vel_inverse): # movement method
+        self.x += vel_x*vel_inverse # vel_inverse changes the direction
+        self.y += vel_y*vel_inverse # 
         self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1])
 
     def getxy(self):
-        return[self.x,self.y]
+        return(self.x,self.y)
     
 
 #enemy class
@@ -57,24 +57,28 @@ class Shield(Construct):
 
     def damage(self,x,y):
         self.__damageBlocks.append(Damage(x,y))
-
+    
+    #render method for shield 
     def render(self):
         pygame.draw.rect(screen, (255,255,255), self.rect)
+        #renders the black damage rects over the shield
         for damage in self.__damageBlocks:
             pygame.draw.rect(screen, (0,0,0), damage.rect)
-    def __getDamage(self):
-        return self.__damageBlocks
+    
     def testBulletCollision(self,bullet):
         damaged_area=False
-        for damage in self.__getDamage():
+        for damage in self.__damageBlocks():
             #checks for if the bullet is in any of the damaged areas in the shield
             if pygame.Rect.colliderect(damage.top_hitbox,bullet.rect):
                 damaged_area=True
-        #if the bullet is not in a damaged area:
+        #if the bullet is not in a damaged area, 
         if pygame.Rect.colliderect(self.rect,bullet.rect) and not damaged_area:
-            xy=bullet.getxy()
-            self.damage(xy[0],xy[1])
-            return True
+            #find the xy of the bullet
+            xy=bullet.getxy()    # returns tuple
+            self.damage(xy[0],xy[1]) # create damage at the x and y of the bullet
+            return True # returns that it did collide
+        
+
 class Damage(Construct):
     def __init__(self,x,y):
         super().__init__([random.randint(5,7),random.randint(6,8)], x, y)
@@ -82,7 +86,7 @@ class Damage(Construct):
 
     
 
-
+#pygame initialisation
 pygame.init()
 screen = pygame.display.set_mode([224,256])
 
@@ -110,11 +114,15 @@ movement_clock=pygame.NUMEVENTS-1
 
 #timer for moving enemy
 time_elapsed=0
+
 #timer for shooting
 shoot_cooldown=0
 
+#count for how many times the aliens hit the wall
 count=0
-vel_inverse=True
+
+# -1 = going left  1 = going right
+vel_inverse=1
 
 player=Player( [30,10] , 20, 200)
 
