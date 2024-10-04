@@ -2,6 +2,9 @@ import pygame, time, random
 
 # Define classes / functions
 class Construct:
+    """
+    Class for generic object inside of game
+    """
     def __init__(self,size,x=0,y=0):
         self.x = x
         self.y = y
@@ -11,21 +14,34 @@ class Construct:
     
 
 class Entity(Construct):
+    """
+    Class for moving objects such as enemies and the player.
+    """
     def __init__(self, size, x, y):
         super().__init__(size,x,y) # init attributes from parent class construct
         self.bullets=[] 
 
     def render(self,screen):
+        """
+        renders the object with the sprite
+        """
         self.imagesize = self.image.get_size()
-        # pygame.draw.rect(screen, (255,255,255), self.rect) # old render method
+        # pygame.draw.rect(screen, (255,255,255), self.rect) # old rect render
         screen.blit(pygame.transform.scale(self.image,(int(self.imagesize[0]/3), int(self.imagesize[1]/3))),self.rect)
 
-    def move(self, vel_x, vel_y,vel_inverse): # movement method
+    def move(self, vel_x : int, vel_y : int, vel_inverse : int): # movement method
+        """
+        vel_x and vel_y parameters are for the speed of movement in x and y axis
+        vel_inverse should only accept 1 or -1 as a parameter, and states whether if the velocity should be reversed
+        """
         self.x += vel_x*vel_inverse # vel_inverse changes the direction
         self.y += vel_y*vel_inverse # 
         self.rect=pygame.Rect(self.x,self.y,self.size[0],self.size[1]) #update rect attribute with new one when moved
 
     def getxy(self):
+        """
+        returns x and y coordinates in a tuple
+        """
         return(self.x,self.y) #returns position as a tuple
     
 
@@ -35,6 +51,9 @@ class Enemy(Entity):
         super().__init__(size, x, y) # init attributes from parent class construct 
         self.image = pygame.image.load("enemy.png")
     def shoot(self):
+        """
+        Appends a new object of class Bullet into attribute bullets.
+        """
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y,1))
     
 
@@ -45,6 +64,9 @@ class Player(Entity):
         super().__init__(size, x, y)
     
     def shoot(self):
+        """
+        Appends a new object of class Bullet into attribute bullets.
+        """
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y, -1))
 
 class Bullet(Entity):
