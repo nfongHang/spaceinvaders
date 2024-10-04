@@ -68,6 +68,11 @@ class Player(Entity):
         Appends a new object of class Bullet into attribute bullets.
         """
         self.bullets.append(Bullet(self.x+(self.size[0]/2), self.y, -1))
+    
+    def die(self):
+        self.x=20
+        self.y=200
+        pygame.mixer.Sound.play(sounds["player_death"])
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
@@ -156,7 +161,7 @@ shoot_cooldown=0
 #count for how many times the aliens hit the wall
 count=0
 
-# -1 = going left  1 = going right
+# -1 = going lef t  1 = going right
 vel_inverse=1
 
 player=Player( [20,7.5] , 20, 200)
@@ -164,6 +169,8 @@ player=Player( [20,7.5] , 20, 200)
 enemy_shoot_cd=500
 
 lives=3
+
+score=0
 
 # SOUNDS
 
@@ -175,8 +182,7 @@ sounds={"shoot" : pygame.mixer.Sound("sources\sounds\shoot.wav"),
         "player_death" : pygame.mixer.Sound("sources\sounds\explosion.wav")}
 #main loop, running state
 #test
-pygame.mixer.music.load('sources\sounds\spaceinvaders1.mpeg')
-pygame.mixer.music.play(-1)
+
 while running: 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -198,7 +204,7 @@ while running:
         player.move(2 ,0, 1)
     if keys[pygame.K_SPACE]:
         #if user wants to shoot, check if cooldwon is over
-        if now-shoot_cooldown>0.4: #figures out when the last bullet was shot versus the time now
+        if now-shoot_cooldown>0.3: #figures out when the last bullet was shot versus the time now
             shoot_cooldown=now
             player.shoot()
             pygame.mixer.Sound.play(sounds["shoot"])
@@ -206,14 +212,13 @@ while running:
 
     if time_elapsed<enemy_shoot_cd+25 and time_elapsed>enemy_shoot_cd-25:
         #1-2 enemies shoot
-        for x in range(0,random.randint(0,1)):
+        for x in range(0,random.randint(0,2)):
             #create bullet obj using shoot method
             enemyObjs[random.randint(0,len(enemyObjs)-1)].shoot()
-            pygame.mixer.Sound.play(sounds["shoot"])
         #randomizes shoot cooldown
-        enemy_shoot_cd=random.randint(0,1250)
+        enemy_shoot_cd=random.randint(0,750)
     
-    if time_elapsed>1250:
+    if time_elapsed>1000:
         #in ms
         #checks to move down    
         if enemyObjs[-1].getxy()[0]>screen.get_width()-30:
@@ -242,6 +247,7 @@ while running:
                 player.bullets.pop(player.bullets.index(bullet))
                 enemyObjs.pop(enemyObjs.index(mob))
                 pygame.mixer.Sound.play(sounds["invader_death"])
+                score+=20
 
             #tests each shield to see if it would collide
             for shield in shields:
@@ -257,6 +263,8 @@ while running:
 
             if pygame.Rect.colliderect(bullet.rect,player.rect):
                 lives-=1
+                player.die()
+                player.render(screen)
                 mob.bullets.pop(mob.bullets.index(bullet))
         
     
@@ -278,12 +286,11 @@ while running:
     pygame.display.flip()
     clock.tick(60)
     if lives<=0 or enemyObjs[-1].y>165:
-        pygame.mixer.Sound.play(sounds["player_death"])
         #lost game, stop running state
         running=False
 
 #end state
 endScreen=True
 while endScreen:
-    pass
+    print()
 pygame.quit()
