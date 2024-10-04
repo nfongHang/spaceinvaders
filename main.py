@@ -272,7 +272,7 @@ while running:
                 player.render(screen)
                 mob.bullets.pop(mob.bullets.index(bullet))
         
-    
+    #test
     #render shields and it's damage
     for shield in shields:
         shield.render(screen)
