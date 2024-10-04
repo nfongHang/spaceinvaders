@@ -136,7 +136,7 @@ enemy_shoot_cd=500
 
 lives=3
 
-#main loop
+#main loop, running state
 while running: 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -235,5 +235,11 @@ while running:
     pygame.display.flip()
     clock.tick(60)
     if lives<=0 or enemyObjs[-1].y>165:
+        #lost game, stop running state
         running=False
+
+#end state
+endScreen=True
+while endScreen:
+    pass
 pygame.quit()
