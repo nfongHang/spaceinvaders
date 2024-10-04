@@ -234,6 +234,6 @@ while running:
     player.render(screen)
     pygame.display.flip()
     clock.tick(60)
-    if lives<=0:
+    if lives<=0 or enemyObjs[-1].y>165:
         running=False
 pygame.quit()
