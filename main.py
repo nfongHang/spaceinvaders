@@ -49,7 +49,7 @@ class Entity(Construct):
 class Enemy(Entity):
     def __init__(self, size, x=0, y=0):
         super().__init__(size, x, y) # init attributes from parent class construct 
-        self.image = pygame.image.load("enemy.png")
+        self.image = pygame.image.load("sources\sprites\enemy.png")
     def shoot(self):
         """
         Appends a new object of class Bullet into attribute bullets.
@@ -60,7 +60,7 @@ class Enemy(Entity):
 #player class
 class Player(Entity):
     def __init__(self, size, x, y):
-        self.image = pygame.image.load("player.png")
+        self.image = pygame.image.load("sources\sprites\player.png")
         super().__init__(size, x, y)
     
     def shoot(self):
@@ -71,7 +71,7 @@ class Player(Entity):
 
 class Bullet(Entity):
     def __init__(self, x, y, downwards):
-        self.image = pygame.image.load("bullet.png")
+        self.image = pygame.image.load("sources\sprites\bullet.png")
         super().__init__([3,7],x-1.5,y)
         self.downwards=downwards
 
@@ -169,12 +169,12 @@ lives=3
 
 pygame.mixer.init()
 
-sounds={"shoot" : pygame.mixer.Sound("shoot.wav"),
-        "invader_death" : pygame.mixer.Sound("invaderkilled.wav"),
-        "invader_move" : pygame.mixer.Sound("fastinvader1.wav"),
-        "player_death" : pygame.mixer.Sound("explosion.wav")}
+sounds={"shoot" : pygame.mixer.Sound("sources\sounds\shoot.wav"),
+        "invader_death" : pygame.mixer.Sound("sources\sounds\invaderkilled.wav"),
+        "invader_move" : pygame.mixer.Sound("sources\sounds\fastinvader1.wav"),
+        "player_death" : pygame.mixer.Sound("sources\sounds\explosion.wav")}
 #main loop, running state
-pygame.mixer.music.load('spaceinvaders1.mpeg')
+pygame.mixer.music.load('sources\sounds\spaceinvaders1.mpeg')
 pygame.mixer.music.play(-1)
 while running: 
     for event in pygame.event.get():
