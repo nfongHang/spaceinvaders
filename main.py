@@ -180,6 +180,7 @@ while running:
         for bullet in mob.bullets:
             bullet.move(0,5,bullet.downwards)
             bullet.render(screen)
+#            pygame.mixer.Sound.play(sounds["invader_move"])  // commented because it sounds horrible
 
 
     if time_elapsed<enemy_shoot_cd+25 and time_elapsed>enemy_shoot_cd-25:
