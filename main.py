@@ -86,7 +86,7 @@ class Shield(Construct):
 
 class Damage(Construct):
     def __init__(self,x,y):
-        super().__init__([3,random.randint(6,8)], x, y)
+        super().__init__([4,random.randint(6,8)], x, y)
         #creates attributes that shows what the top hitbox is for the rect (I couldnt figure out how to get it to test the top of the rect)
         self.top_hitbox=pygame.Rect(self.x,self.y,self.size[0],1)
 
@@ -159,9 +159,9 @@ while running:
 
     #player input
     keys=pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and player.getxy()[0]>20:
+    if keys[pygame.K_LEFT] and player.getxy()[0]>5:
         player.move(2, 0, -1)
-    elif keys[pygame.K_RIGHT] and player.getxy()[0]<screen.get_width()-50:
+    elif keys[pygame.K_RIGHT] and player.getxy()[0]<screen.get_width()-25:
         player.move(2 ,0, 1)
     if keys[pygame.K_SPACE]:
 
@@ -188,6 +188,7 @@ while running:
         for x in range(0,random.randint(0,1)):
             #create bullet obj using shoot method
             enemyObjs[random.randint(0,len(enemyObjs)-1)].shoot()
+            pygame.mixer.Sound.play(sounds["shoot"])
         #randomizes shoot cooldown
         enemy_shoot_cd=random.randint(0,1250)
     
@@ -216,9 +217,10 @@ while running:
         #mob bullet collisions
         for bullet in player.bullets:
             if pygame.Rect.colliderect(mob.rect,bullet.rect):
-                #if collision of enemy and bullet:
+                #if collision of enemy and bullet, remove from list / kill:
                 player.bullets.pop(player.bullets.index(bullet))
                 enemyObjs.pop(enemyObjs.index(mob))
+                pygame.mixer.Sound.play(sounds["invader_death"])
 
             #tests each shield to see if it would collide
             for shield in shields:
