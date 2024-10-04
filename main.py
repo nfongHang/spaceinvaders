@@ -142,7 +142,8 @@ pygame.mixer.init()
 
 sounds={"shoot" : pygame.mixer.Sound("shoot.wav"),
         "invader_death" : pygame.mixer.Sound("invaderkilled.wav"),
-        "invader_move" : pygame.mixer.Sound("fastinvader1.wav")}
+        "invader_move" : pygame.mixer.Sound("fastinvader1.wav"),
+        "player_death" : pygame.mixer.Sound("explosion.wav")}
 #main loop, running state
 while running: 
     for event in pygame.event.get():
@@ -246,6 +247,7 @@ while running:
     pygame.display.flip()
     clock.tick(60)
     if lives<=0 or enemyObjs[-1].y>165:
+        pygame.mixer.Sound.play(sounds["player_death"])
         #lost game, stop running state
         running=False
 
