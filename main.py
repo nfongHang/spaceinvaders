@@ -257,7 +257,7 @@ while running:
             if pygame.Rect.colliderect(bullet.rect,player.rect):
                 lives-=1
                 mob.bullets.pop(mob.bullets.index(bullet))
-        mob.render(screen)
+        
     
     #render shields and it's damage
     for shield in shields:
@@ -271,6 +271,7 @@ while running:
         for bullet in mob.bullets:
             bullet.move(0,5,bullet.downwards)
             bullet.render(screen)
+        mob.render(screen)
             
     player.render(screen)
     pygame.display.flip()
