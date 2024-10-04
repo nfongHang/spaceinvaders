@@ -64,7 +64,7 @@ class Shield(Construct):
         for damage in self.__damageBlocks:
             pygame.draw.rect(screen, (0,0,0), damage.rect)
     
-    def testBulletCollision(self,bullet):
+    def testBulletCollision(self, bullet, destructive):
         damaged_area=False
         for damage in self.__damageBlocks:
             #checks for if the bullet is in any of the damaged areas in the shield
@@ -74,7 +74,8 @@ class Shield(Construct):
         if pygame.Rect.colliderect(self.rect,bullet.rect) and not damaged_area:
             #find the xy of the bullet
             xy=bullet.getxy()    # returns tuple
-            self.damage(xy[0],xy[1]) # create damage at the x and y of the bullet
+            if destructive:
+                self.damage(xy[0],xy[1]) # create damage at the x and y of the bullet
             return True # returns that it did collide
         
 
@@ -171,7 +172,6 @@ while running:
         #1-2 enemies shoot
         for x in range(0,random.randint(0,1)):
             #create bullet obj using shoot method
-            print('a')
             enemyObjs[random.randint(0,len(enemyObjs)-1)].shoot()
         #randomizes shoot cooldown
         enemy_shoot_cd=random.randint(0,1250)
@@ -207,13 +207,13 @@ while running:
 
             #tests each shield to see if it would collide
             for shield in shields:
-                if shield.testBulletCollision(bullet):
+                if shield.testBulletCollision(bullet,False):
+                    #remove bullet if it collides
                     player.bullets.pop(player.bullets.index(bullet))
         
-
         for bullet in mob.bullets:
             for shield in shields:
-                if shield.testBulletCollision(bullet):
+                if shield.testBulletCollision(bullet,True):
                     mob.bullets.pop(mob.bullets.index(bullet))
 
 
