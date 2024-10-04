@@ -202,18 +202,6 @@ while running:
             player.shoot()
             pygame.mixer.Sound.play(sounds["shoot"])
 
-    #move bullets
-    for bullet in player.bullets:
-        bullet.move(0,5,bullet.downwards)
-        
-        bullet.render(screen)
-    
-    for mob in enemyObjs:
-        for bullet in mob.bullets:
-            bullet.move(0,5,bullet.downwards)
-            bullet.render(screen)
-#            pygame.mixer.Sound.play(sounds["invader_move"])  // commented because it sounds horrible
-
 
     if time_elapsed<enemy_shoot_cd+25 and time_elapsed>enemy_shoot_cd-25:
         #1-2 enemies shoot
@@ -274,6 +262,16 @@ while running:
     #render shields and it's damage
     for shield in shields:
         shield.render(screen)
+    #move bullets
+    for bullet in player.bullets:
+        bullet.move(0,5,bullet.downwards)
+        bullet.render(screen)
+    
+    for mob in enemyObjs:
+        for bullet in mob.bullets:
+            bullet.move(0,5,bullet.downwards)
+            bullet.render(screen)
+            
     player.render(screen)
     pygame.display.flip()
     clock.tick(60)
