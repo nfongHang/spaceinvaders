@@ -18,7 +18,7 @@ class Entity(Construct):
     Class for moving objects such as enemies and the player.
     """
     def __init__(self, size, x, y):
-        super().__init__(size,x,y) # init attributes from parent class construct
+        super().__init__(size,x,y) # init attributes from parent class constructor
         self.bullets=[] 
 
     def render(self,screen):
@@ -48,7 +48,7 @@ class Entity(Construct):
 #enemy class
 class Enemy(Entity):
     def __init__(self, size, x=0, y=0):
-        super().__init__(size, x, y) # init attributes from parent class construct 
+        super().__init__(size, x, y) # init attributes from parent class constructor
         self.image = pygame.image.load(r"sources\sprites\enemy.png")
     def shoot(self):
         """
@@ -233,7 +233,7 @@ while running:
         elif enemyObjs[0].getxy()[0]<30:
             vel_inverse=1
             count+=1
-        
+        #if it hits the wall 4 times, move down
         if count==4:
             for mob in enemyObjs:
                 mob.move(0,15,1)
@@ -275,11 +275,10 @@ while running:
     #render shields and it's damage
     for shield in shields:
         shield.render(screen)
-    #move bullets
+    #move bullets for player & enemies
     for bullet in player.bullets:
         bullet.move(0,5,bullet.downwards)
         bullet.render(screen)
-    
     for mob in enemyObjs:
         for bullet in mob.bullets:
             bullet.move(0,5,bullet.downwards)
@@ -289,13 +288,17 @@ while running:
     player.render(screen)
     pygame.display.flip()
     clock.tick(60)
-    if lives<=0 or enemyObjs[-1].y>165:
+
+    #losing conditions: died 3 times or enemies get too close
+    if lives<=0 or enemyObjs[-1].y>160:
         #lost game, stop running state
         running=False
 
 #end state
 endScreen=True
 
+
+#hastily put together text rendering
 def message(text):
     return font.render(text, False, (255,255,255)) 
 
