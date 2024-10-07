@@ -126,6 +126,9 @@ class Damage(Construct):
         self.top_hitbox=pygame.Rect(self.x,self.y,self.size[0],1)
 
     
+#hastily put together text rendering
+def message(text):
+    return font.render(text, False, (255,255,255)) 
 
 #pygame initialisation
 pygame.init()
@@ -214,7 +217,7 @@ while running:
             player.shoot()
             pygame.mixer.Sound.play(sounds["shoot"])
 
-
+###
     if time_elapsed<enemy_shoot_cd+25 and time_elapsed>enemy_shoot_cd-25:
         #1-2 enemies shoot
         for x in range(0,random.randint(0,2)):
@@ -222,7 +225,7 @@ while running:
             enemyObjs[random.randint(0,len(enemyObjs)-1)].shoot()
         #randomizes shoot cooldown
         enemy_shoot_cd=random.randint(0,750)
-    
+###
     if time_elapsed>1000:
         #in ms
         #checks to move down    
@@ -246,7 +249,7 @@ while running:
 
     for mob in enemyObjs:
         #mob bullet collisions
-        for bullet in player.bullets:
+        for bullet in player.bullets:                                                                                                                              
             if pygame.Rect.colliderect(mob.rect,bullet.rect):
                 #if collision of enemy and bullet, remove from list / kill:
                 player.bullets.pop(player.bullets.index(bullet))
@@ -275,6 +278,7 @@ while running:
     #render shields and it's damage
     for shield in shields:
         shield.render(screen)
+
     #move bullets for player & enemies
     for bullet in player.bullets:
         bullet.move(0,5,bullet.downwards)
@@ -297,10 +301,6 @@ while running:
 #end state
 endScreen=True
 
-
-#hastily put together text rendering
-def message(text):
-    return font.render(text, False, (255,255,255)) 
 
 while endScreen:
     screen.fill(0)
